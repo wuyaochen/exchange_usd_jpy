@@ -10,14 +10,14 @@ def _parse_float(x):
 def build_csv(min_period = "2000M1", create_csv = False):
     url = "https://cpx.cbc.gov.tw/API/DataAPI/Get?FileName=BP01M01"
     res = requests.get(url, timeout=10)
-    res.encoding = "utf-8"
+    res.encoding = "UTF-8"
 
     data = res.json()
     sets = []
     try:
         sets = data['data']['dataSets']
     except Exception as e:
-        print("[錯誤] 解析API結構失敗:", e)
+        print("錯誤", e)
         exit(1)
 
     rows_for_csv = []

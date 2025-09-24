@@ -1,6 +1,6 @@
 import pandas as pd
 from graph import plot_graph_usd, plot_graph_jpy
-from excahnge import build_csv
+from exchange import build_csv
 
 def run():
     exchange_update = input("是否更新匯率資料(目前最新為2025年8月資料):(Y/N)")

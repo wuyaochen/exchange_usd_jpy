@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
 
-def plot_graph_usd(df_csv, show: bool = True):
+def plot_graph_usd(df_csv, show = True):
     x = df_csv['Period']
     y = df_csv['NTD/USD']
 
@@ -31,7 +31,7 @@ def plot_graph_usd(df_csv, show: bool = True):
 
     return fig, ax
 
-def plot_graph_jpy(df_csv, show: bool = True):
+def plot_graph_jpy(df_csv, show = True):
     x = df_csv['Period']
     y = df_csv['NTD/JPY']
 
