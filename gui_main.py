@@ -6,7 +6,7 @@ import os
 import pandas as pd
 
 from exchange import build_csv
-from graph import plot_graph_usd, plot_graph_jpy
+from graph import plot_graph_usd, plot_graph_jpy, plot_graph_gbp
 
 def run_task(create_csv, money, log_widget):
     if create_csv:
@@ -22,7 +22,13 @@ def run_task(create_csv, money, log_widget):
     df_csv = pd.read_csv(csv_path, encoding="UTF-8")
 
     if "Period" in df_csv.columns:
-        df_csv["Period"] = pd.to_datetime(df_csv["Period"].astype(str).str.replace("M", "-"), format="%Y-%m")
+        # 先清理 Period 欄位 BOM 或空白問題
+        df_csv["Period"] = df_csv["Period"].astype(str).str.strip().str.replace("M", "-").str.replace("\uFEFF", "")
+        # 檢查前幾筆 Period 欄位
+        print("Period 前10：", df_csv["Period"].head(10).to_list())
+        # 再做時間轉換，如果失敗給 NaT
+        df_csv["Period"] = pd.to_datetime(df_csv["Period"], format="%Y-%m", errors='coerce')
+        print("Period 轉換後前10：", df_csv["Period"].head(10).to_list())
 
         money = money.strip().upper()
         if money == "USD":
@@ -34,13 +40,20 @@ def run_task(create_csv, money, log_widget):
             selected = df_csv[["Period", "NTD/JPY"]]
             append_log(log_widget, "最近幾筆(JPY): \n" + selected.tail().to_string(index=False))
             plot_graph_jpy(df_csv, show = True)
+
+        elif money == "GBP":
+            selected = df_csv[["Period", "NTD/GBP"]]
+            append_log(log_widget, "最近幾筆(GBP): \n" + selected.tail().to_string(index=False))
+            print("GBP 前10資料：", df_csv[["Period", "NTD/GBP"]].head(10).to_string(index=False))
+            plot_graph_gbp(df_csv, show = True)
         
         elif money == "ALL":
             append_log(log_widget, "最近幾筆(ALL): \n" + df_csv.tail().to_string(index=False))
             plot_graph_usd(df_csv, show = False)
             plot_graph_jpy(df_csv, show = True)
+            plot_graph_gbp(df_csv, show = True)
         else:
-            raise ValueError("幣別必須是 USD / JPY / ALL")
+            raise ValueError("幣別必須是 USD / JPY / GBP / ALL")
         append_log(log_widget, "完成")
 
 def append_log(log_widget, text):
@@ -51,7 +64,7 @@ def append_log(log_widget, text):
 
 def main():
     root = tk.Tk()
-    root.title("外匯GUI (USD/JPY)")
+    root.title("外匯GUI (USD/JPY/GBP)")
 
     frm = ttk.Frame(root, padding=20)
     frm.grid(row=0, column=0, sticky="nsew")
@@ -61,7 +74,7 @@ def main():
 
     ttk.Checkbutton(frm, text="更新並寫出CSV", variable=var_create_csv).grid(row=0, column=0, sticky='w')
     ttk.Label(frm, text="幣別:").grid(row=0, column=1, sticky="e", padx=(12, 4))
-    cb = ttk.Combobox(frm, textvariable=var_money, state="readonly", values=("USD", "JPY", "ALL"), width=6)
+    cb = ttk.Combobox(frm, textvariable=var_money, state="readonly", values=("USD", "JPY", "GBP", "ALL"), width=6)
     cb.grid(row=0, column=2, sticky="w")
 
     btn_run = ttk.Button(frm, text="執行")

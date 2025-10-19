@@ -3,7 +3,7 @@ from graph import plot_graph_usd, plot_graph_jpy
 from exchange import build_csv
 
 def run():
-    exchange_update = input("是否更新匯率資料(目前最新為2025年8月資料):(Y/N)")
+    exchange_update = input("是否更新匯率資料(目前最新為2025年9月資料):(Y/N)")
     if exchange_update.upper() == "Y":
         update_data = True
     else:
@@ -14,7 +14,7 @@ def run():
     df_csv["Period"] = pd.to_datetime(df_csv['Period'].str.replace('M', '-'),
                          format='%Y-%m')
 
-    money = input("選擇你想查的幣值 (USD 或 JPY 或 ALL): ").strip().upper()
+    money = input("選擇你想查的幣值 (USD 或 JPY 或 GBP 或 ALL): ").strip().upper()
 
     if money == 'USD':
         selected = df_csv[['Period', 'NTD/USD']]

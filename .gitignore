@@ -1,5 +1,5 @@
 # 忽略 Exchange 重要目錄
-exchange/web/
-exchange/vibecoding/
-exchange/src/
-exchange/tests/
+web/
+vibecoding/
+src/
+tests/
