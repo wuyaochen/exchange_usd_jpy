@@ -1,5 +1,5 @@
 import pandas as pd
-from graph import plot_graph_usd, plot_graph_jpy
+from graph import plot_graph_usd, plot_graph_jpy, plot_graph_gbp
 from exchange import build_csv
 
 def run():
@@ -24,13 +24,18 @@ def run():
         selected = df_csv[['Period', 'NTD/JPY']]
         print(selected.tail().to_string(index=False))
         plot_graph_jpy(df_csv, show=True)
+    elif money == 'GBP':
+        selected = df_csv[['Period', 'NTD/GBP']]
+        print(selected.tail().to_string(index=False))
+        plot_graph_gbp(df_csv, show=True)
     elif money == 'ALL':
         print(df_csv.tail().to_string(index=False))
         plot_graph_usd(df_csv, show=False)
-        plot_graph_jpy(df_csv, show=True)
+        plot_graph_jpy(df_csv, show=False)
+        plot_graph_gbp(df_csv, show=True)
 
     else:
-        print("輸入無效，請輸入 USD 或 JPY 或 ALL")
+        print("輸入無效，請輸入 USD、JPY、GBP 或 ALL")
 
 if __name__ == "__main__":
     run()

@@ -29,6 +29,8 @@ def plot_graph_usd(df_csv, show = True):
     ax.tick_params(axis='x', which='minor', labelsize=7, rotation=90, pad=18)
     ax.tick_params(axis='y', which='major', labelsize=9)
 
+    ax.set_title("USD")
+
     fig.tight_layout()
 
     if show:
@@ -64,6 +66,8 @@ def plot_graph_jpy(df_csv, show = True):
     ax.tick_params(axis='x', which='minor', labelsize=7, rotation=90, pad=18)
     ax.tick_params(axis='y', which='major', labelsize=9)
 
+    ax.set_title("JPY")
+
     fig.tight_layout()
 
     if show:
@@ -98,6 +102,8 @@ def plot_graph_gbp(df_csv, show=True):
     ax.tick_params(axis='x', which='major', labelsize=9, rotation=0, pad=10)
     ax.tick_params(axis='x', which='minor', labelsize=7, rotation=90, pad=18)
     ax.tick_params(axis='y', which='major', labelsize=9)
+
+    ax.set_title("GBP")
 
     fig.tight_layout()
 

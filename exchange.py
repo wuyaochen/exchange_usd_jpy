@@ -32,7 +32,7 @@ def build_csv(min_period = "2000M1", create_csv = False):
                 jpy_usd = _parse_float(jpy_usd_raw)
                 gbp_usd = _parse_float(gbp_usd_raw)
                 ntd_jpy = ntd_usd / jpy_usd if ntd_usd not in (None, 0.0) and jpy_usd not in (None, 0.0) else None
-                ntd_gbp = ntd_usd / gbp_usd if ntd_usd not in (None, 0.0) and gbp_usd not in (None, 0.0) else None
+                ntd_gbp = ntd_usd * gbp_usd if ntd_usd not in (None, 0.0) and gbp_usd not in (None, 0.0) else None
                 rows_for_csv.append([
                     period,
                     ntd_usd_raw,
@@ -45,9 +45,9 @@ def build_csv(min_period = "2000M1", create_csv = False):
             writer.writerow(['Period', 'NTD/USD', 'NTD/JPY', 'NTD/GBP'])
             writer.writerows(rows_for_csv)
 
-    print("已將Period > 2000M1的 NTD/USD, JPY/NTD, GBP/NTD四欄存入 usd_jpy_history.csv")
+    print("已將Period > 2000M1的 NTD/USD, NTD/JPY, NTD/GBP 四欄存入 usd_jpy_history.csv")
     for row in rows_for_csv[:10]:
-        print(f"Period: {row[0]}, NTD/USD: {row[1]}, JPY/NTD: {row[2]}, GBP/NTD: {row[3]}")
+        print(f"Period: {row[0]}, NTD/USD: {row[1]}, NTD/JPY: {row[2]}, NTD/GBP: {row[3]}")
 
 def main():
     build_csv(min_period="2000M1", create_csv=True)
