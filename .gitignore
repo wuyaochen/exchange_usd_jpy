@@ -3,3 +3,14 @@ web/
 vibecoding/
 src/
 tests/
+.github/
+.env
+.env.*
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+# 忽略 VSCode 設定檔
+.vscode/
+# 忽略 Python 虛擬環境目錄
+# 也忽略所有 .spec 檔案
+*.spec
